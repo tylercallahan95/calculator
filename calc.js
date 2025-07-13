@@ -1,28 +1,39 @@
 // Try to use object mapping for operate function & test
 // Focus on building out frontend
 
-let num = 2;
-let num2 = 3;
-let operator = '/';
+let input1 = '';
+let num1 = '';
+let input2 = '';
+let num2 = '';
+let operator;
 
 const sub = (num, num2) => {
   total = num - num2;
-  console.log('Final:', total);
+  console.log('Final Sub:', total);
+  return total;
 };
 
 const add = (num, num2) => {
   total = num + num2;
-  console.log('Final:', total);
+  console.log('Final Add:', total);
+  return total;
 };
 
 const multiply = (num, num2) => {
   total = num * num2;
-  console.log('Final:', total);
+  console.log('Final Multiply:', total);
+  return total;
 };
 
 const divide = (num, num2) => {
-  total = num / num2;
-  console.log('Final:', total);
+  if (num2 === 0) {
+    total = 'Really???';
+    return total;
+  } else {
+    total = num / num2;
+    console.log('Final Divide:', total);
+    return total;
+  }
 };
 
 const operate = function (num, num2, operator) {
@@ -37,7 +48,7 @@ const operate = function (num, num2, operator) {
   }
 };
 
-operate(num, num2, operator);
+operate(num1, num3, operator);
 
 // Create function to create button
 // Use function in loop to do 0-9
@@ -50,21 +61,68 @@ display.style.fontSize = '20px';
 display.style.padding = '5px';
 display.style.margin = '10px';
 
+// const operators = ['+', '-', '*', '/', '=', 'x'];
+
+function input(x) {
+  let btn = x.target;
+  let btnInput = btn.innerText;
+  console.info('button:', btn.innerText);
+  let currentDisplay = document.getElementById('currentDisplay');
+  currentDisplay.innerHTML = btnInput;
+
+  if (
+    btnInput !== '+' &&
+    btnInput !== '-' &&
+    btnInput !== '*' &&
+    btnInput !== '/' &&
+    operator === undefined
+  ) {
+    input1 += btnInput;
+    num1 = Number(input1);
+    console.log('Number 1:', num1);
+  } else if (
+    btnInput === '+' ||
+    btnInput === '-' ||
+    btnInput === '*' ||
+    btnInput === '/'
+  ) {
+    operator = btnInput;
+    console.log('Operator: ', operator);
+    btnInput = '';
+  } else if (
+    btnInput !== '+' &&
+    btnInput !== '-' &&
+    btnInput !== '*' &&
+    btnInput !== '/' &&
+    btnInput !== '='
+  ) {
+    input2 += btnInput;
+    num2 = Number(input2);
+    console.log('Number 2:', num2, 'Operator: ', operator);
+  } else if (btnInput === '=') {
+    operate(num1, num2, operator);
+    currentDisplay.innerHTML = total;
+  }
+}
+
 function button(i) {
   buttonExample = document.createElement('button');
   buttonExample.appendChild(document.createTextNode(i));
+  buttonExample.id = i;
+  buttonExample.addEventListener('click', input);
   div = document.getElementById('btn');
   div.appendChild(buttonExample);
+  // console.log(buttonExample.textContent);
 }
 
 for (let i = 0; i <= 9; i++) {
   button(i);
 }
 
-// const operators = ['+', '-', '*', '/', '=', 'x'];
 button('+');
 button('-');
 button('*');
 button('/');
 button('=');
 button('x');
+button('AC');
