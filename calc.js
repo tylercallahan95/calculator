@@ -1,9 +1,11 @@
+// Initial Values
 let input1 = '';
 let num1;
 let input2 = '';
 let num2;
 let operator;
 
+// Operator Functions
 const sub = (num, num2) => {
   total = num - num2;
   console.log('Final Sub:', total);
@@ -47,25 +49,45 @@ const operate = function (num, num2, operator) {
 
 operate(num1, num2, operator);
 
-// Create function to create button
-// Use function in loop to do 0-9
-// Use function to then make the operator buttons as well (+, -, *, /, =, x or back)
-
+// Front end
 const display = document.getElementById('display');
 display.style.display = 'inline-block';
 display.style.border = 'solid';
 display.style.fontSize = '20px';
 display.style.padding = '5px';
+display.style.paddingLeft = '100px';
 display.style.margin = '10px';
+
+function button(i) {
+  buttons = document.createElement('button');
+  buttons.appendChild(document.createTextNode(i));
+  buttons.id = i;
+  buttons.addEventListener('click', input);
+  buttons.style.padding = '10px';
+  div = document.getElementById('btn');
+  div.appendChild(buttons);
+}
+
+for (let i = 0; i <= 9; i++) {
+  button(i);
+}
+
+button('+');
+button('-');
+button('*');
+button('/');
+button('=');
+button('x');
+button('AC');
 
 // const operators = ['+', '-', '*', '/', '=', 'x'];
 
+// Input Logic
 function input(x) {
   let btn = x.target;
   let btnInput = btn.innerText;
   console.info('button:', btn.innerText);
   let currentDisplay = document.getElementById('currentDisplay');
-  currentDisplay.innerHTML = btnInput;
 
   if (
     btnInput !== '+' &&
@@ -76,6 +98,7 @@ function input(x) {
   ) {
     input1 += btnInput;
     num1 = Number(input1);
+    currentDisplay.innerHTML = num1;
     console.log('Number 1:', num1);
   } else if (
     btnInput === '+' ||
@@ -85,6 +108,7 @@ function input(x) {
   ) {
     operator = btnInput;
     console.log('Operator: ', operator);
+    currentDisplay.innerHTML = operator;
     btnInput = '';
   } else if (
     btnInput !== '+' &&
@@ -96,6 +120,7 @@ function input(x) {
   ) {
     input2 += btnInput;
     num2 = Number(input2);
+    currentDisplay.innerHTML = num2;
     console.log('Number 2:', num2);
   } else if (btnInput === '=') {
     if (input1 === '' || input2 === '') {
@@ -122,25 +147,3 @@ function input(x) {
     );
   }
 }
-
-function button(i) {
-  buttonExample = document.createElement('button');
-  buttonExample.appendChild(document.createTextNode(i));
-  buttonExample.id = i;
-  buttonExample.addEventListener('click', input);
-  div = document.getElementById('btn');
-  div.appendChild(buttonExample);
-  // console.log(buttonExample.textContent);
-}
-
-for (let i = 0; i <= 9; i++) {
-  button(i);
-}
-
-button('+');
-button('-');
-button('*');
-button('/');
-button('=');
-button('x');
-button('AC');
