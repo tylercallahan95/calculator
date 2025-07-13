@@ -1,10 +1,7 @@
-// Try to use object mapping for operate function & test
-// Focus on building out frontend
-
 let input1 = '';
-let num1 = '';
+let num1;
 let input2 = '';
-let num2 = '';
+let num2;
 let operator;
 
 const sub = (num, num2) => {
@@ -48,7 +45,7 @@ const operate = function (num, num2, operator) {
   }
 };
 
-operate(num1, num3, operator);
+operate(num1, num2, operator);
 
 // Create function to create button
 // Use function in loop to do 0-9
@@ -94,14 +91,35 @@ function input(x) {
     btnInput !== '-' &&
     btnInput !== '*' &&
     btnInput !== '/' &&
-    btnInput !== '='
+    btnInput !== '=' &&
+    btnInput !== 'AC'
   ) {
     input2 += btnInput;
     num2 = Number(input2);
-    console.log('Number 2:', num2, 'Operator: ', operator);
+    console.log('Number 2:', num2);
   } else if (btnInput === '=') {
-    operate(num1, num2, operator);
-    currentDisplay.innerHTML = total;
+    if (input1 === '' || input2 === '') {
+      message = 'Error';
+      currentDisplay.innerHTML = message;
+    } else {
+      operate(num1, num2, operator);
+      currentDisplay.innerHTML = total;
+      num1 = total;
+    }
+  } else if (btnInput === 'AC') {
+    num1 = '';
+    num2 = '';
+    input1 = '';
+    input2 = '';
+    operator = undefined;
+    console.log(
+      'Num1 Value: ',
+      num1,
+      'Num2 Value: ',
+      num2,
+      'Operator: ',
+      operator
+    );
   }
 }
 
