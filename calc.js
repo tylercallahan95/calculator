@@ -51,23 +51,45 @@ operate(num1, num2, operator);
 
 // Front end
 const display = document.getElementById('display');
-display.style.display = 'inline-block';
+display.style.display = 'flex';
+display.style.justifyContent = 'right';
+display.style.width = '242px';
 display.style.border = 'solid';
 display.style.fontSize = '20px';
 display.style.padding = '5px';
-display.style.paddingLeft = '100px';
 display.style.margin = '10px';
+display.style.backgroundColor = 'white';
 
 function button(i) {
-  buttons = document.createElement('button');
+  const buttons = document.createElement('button');
   buttons.appendChild(document.createTextNode(i));
   buttons.id = i;
   buttons.addEventListener('click', input);
   buttons.style.padding = '10px';
+  buttons.style.margin = '7px';
+  buttons.style.borderRadius = '5px';
+  buttons.style.borderColor = 'white';
   div = document.getElementById('btn');
   div.appendChild(buttons);
 }
 
+const calculator = document.getElementById('calculator');
+calculator.style.display = 'flex';
+calculator.style.flexWrap = 'wrap';
+calculator.style.justifyContent = 'center';
+calculator.style.width = '280px';
+calculator.style.maxWidth = '300px';
+calculator.style.border = 'solid';
+calculator.style.borderRadius = '15px';
+calculator.style.padding = '10px';
+calculator.style.backgroundColor = '#565656';
+
+const container = document.getElementById('container');
+container.style.display = 'flex';
+container.style.flexDirection = 'column';
+container.style.alignItems = 'center';
+
+// Generate buttons
 for (let i = 0; i <= 9; i++) {
   button(i);
 }
@@ -79,8 +101,6 @@ button('/');
 button('=');
 button('x');
 button('AC');
-
-// const operators = ['+', '-', '*', '/', '=', 'x'];
 
 // Input Logic
 function input(x) {
@@ -96,10 +116,14 @@ function input(x) {
     btnInput !== '/' &&
     operator === undefined
   ) {
-    input1 += btnInput;
-    num1 = Number(input1);
-    currentDisplay.innerHTML = num1;
-    console.log('Number 1:', num1);
+    if (btnInput === 'x') {
+      input1 = input1.slice(0, -1);
+      currentDisplay.innerHTML = input1;
+    } else {
+      input1 += btnInput;
+      currentDisplay.innerHTML = input1;
+      console.log('Number 1:', input1);
+    }
   } else if (
     btnInput === '+' ||
     btnInput === '-' ||
@@ -118,11 +142,17 @@ function input(x) {
     btnInput !== '=' &&
     btnInput !== 'AC'
   ) {
-    input2 += btnInput;
-    num2 = Number(input2);
-    currentDisplay.innerHTML = num2;
-    console.log('Number 2:', num2);
+    if (btnInput === 'x') {
+      input2 = input2.slice(0, -1);
+      currentDisplay.innerHTML = input2;
+    } else {
+      input2 += btnInput;
+      currentDisplay.innerHTML = input2;
+      console.log('Number 2:', input2);
+    }
   } else if (btnInput === '=') {
+    num1 = Number(input1);
+    num2 = Number(input2);
     if (input1 === '' || input2 === '') {
       message = 'Error';
       currentDisplay.innerHTML = message;
@@ -137,6 +167,7 @@ function input(x) {
     input1 = '';
     input2 = '';
     operator = undefined;
+    currentDisplay.innerHTML = '0';
     console.log(
       'Num1 Value: ',
       num1,
