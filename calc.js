@@ -8,18 +8,21 @@ let operator;
 // Operator Functions
 const sub = (num, num2) => {
   total = num - num2;
+  console.log('Num1:', num, 'Num2:', num2);
   console.log('Final Sub:', total);
   return total;
 };
 
 const add = (num, num2) => {
   total = num + num2;
+  console.log('Num1:', num, 'Num2:', num2);
   console.log('Final Add:', total);
   return total;
 };
 
 const multiply = (num, num2) => {
   total = num * num2;
+  console.log('Num1:', num, 'Num2:', num2);
   console.log('Final Multiply:', total);
   return total;
 };
@@ -30,7 +33,21 @@ const divide = (num, num2) => {
     return total;
   } else {
     total = num / num2;
+    console.log('Num1:', num, 'Num2:', num2);
     console.log('Final Divide:', total);
+    return total;
+  }
+};
+
+const equals = (input1, input2, operator) => {
+  num1 = Number(input1);
+  num2 = Number(input2);
+  if (input1 === '' || input2 === '') {
+    message = 'Error';
+    currentDisplay.innerHTML = message;
+  } else {
+    operate(num1, num2, operator);
+    currentDisplay.innerHTML = total;
     return total;
   }
 };
@@ -47,7 +64,7 @@ const operate = function (num, num2, operator) {
   }
 };
 
-operate(num1, num2, operator);
+// operate(num1, num2, operator);
 
 // Front end
 const display = document.getElementById('display');
@@ -125,10 +142,26 @@ function input(x) {
       console.log('Number 1:', input1);
     }
   } else if (
-    btnInput === '+' ||
-    btnInput === '-' ||
-    btnInput === '*' ||
-    btnInput === '/'
+    operator !== '' &&
+    input1 !== '' &&
+    input2 !== '' &&
+    (btnInput === '+' ||
+      btnInput === '-' ||
+      btnInput === '*' ||
+      btnInput === '/')
+  ) {
+    equals(input1, input2, operator);
+    input1 = total;
+    console.log('Updated num1:', input1);
+    num2 = '';
+    input2 = '';
+    operator = btnInput;
+  } else if (
+    operator !== '' &&
+    (btnInput === '+' ||
+      btnInput === '-' ||
+      btnInput === '*' ||
+      btnInput === '/')
   ) {
     operator = btnInput;
     console.log('Operator: ', operator);
@@ -151,16 +184,7 @@ function input(x) {
       console.log('Number 2:', input2);
     }
   } else if (btnInput === '=') {
-    num1 = Number(input1);
-    num2 = Number(input2);
-    if (input1 === '' || input2 === '') {
-      message = 'Error';
-      currentDisplay.innerHTML = message;
-    } else {
-      operate(num1, num2, operator);
-      currentDisplay.innerHTML = total;
-      num1 = total;
-    }
+    equals(input1, input2, operator);
   } else if (btnInput === 'AC') {
     num1 = '';
     num2 = '';
